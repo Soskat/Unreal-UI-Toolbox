@@ -1,0 +1,38 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "CoreUIArchitecture",
+	"Description": "Basic architecture for managing game UI elements in runtime. Heavily inspired by Lyra Starter Game (https://docs.unrealengine.com/5.0/en-US/lyra-sample-game-in-unreal-engine/)",
+	"Category": "Other",
+	"CreatedBy": "Katarzyna 'K8' Sosnowska",
+	"CreatedByURL": "https://gitlab.com/Soskat",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "CoreUIArchitecture",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "CommonUI",
+			"Enabled": true
+		},
+		{
+			"Name": "DebuggingUtils",
+			"Enabled": true
+		}
+	]
+}

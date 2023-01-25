@@ -2,6 +2,9 @@ Binaries
 DerivedDataCache
 Intermediate
 Saved
+Plugins/Developer/*
+.idea/*
+.idea
 .vscode
 .vs
 .vsconfig
