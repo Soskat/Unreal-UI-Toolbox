@@ -1,12 +1,13 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "BasePlayerController.h"
 #include "ExampleTriggerBase.h"
 
 #include "ExamplePlayerController.generated.h"
 
 UCLASS(Abstract)
-class UITOOLBOXPREVIEW_API AExamplePlayerController : public APlayerController
+class UITOOLBOXPREVIEW_API AExamplePlayerController : public ABasePlayerController
 {
 	GENERATED_BODY()
 

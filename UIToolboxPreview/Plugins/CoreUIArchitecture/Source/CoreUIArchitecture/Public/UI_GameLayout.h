@@ -3,13 +3,13 @@
 #include "CoreMinimal.h"
 #include "CommonUserWidget.h"
 #include "GameplayTagContainer.h"
-#include "GameLayoutWidget.generated.h"
+#include "Widgets/CommonActivatableWidgetContainer.h"
+#include "UI_GameLayout.generated.h"
 
 class UCommonActivatableWidget;
-class UCommonActivatableWidgetContainerBase;
 
 UCLASS(Abstract, meta = (DisableNativeTick))
-class COREUIARCHITECTURE_API UGameLayoutWidget : public UCommonUserWidget
+class COREUIARCHITECTURE_API UUI_GameLayout : public UCommonUserWidget
 {
 	GENERATED_BODY()
 

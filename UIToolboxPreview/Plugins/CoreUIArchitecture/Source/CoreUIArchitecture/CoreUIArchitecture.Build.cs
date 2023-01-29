@@ -11,6 +11,7 @@ public class CoreUIArchitecture : ModuleRules
 			{
 				"Core",
 				"GameplayTags",
+				"CommonUI",
 			}
 		);
 		PrivateDependencyModuleNames.AddRange(
@@ -22,9 +23,9 @@ public class CoreUIArchitecture : ModuleRules
 				"SlateCore",
 				"UMG",
 				"CommonInput",
-				"CommonUI",
 				"EnhancedInput",
-				"DebuggingUtils"
+				"DeveloperSettings",
+				"DebuggingUtils",
 			}
 		);
 	}

@@ -1,15 +1,15 @@
-#include "GameLayoutWidget.h"
+#include "UI_GameLayout.h"
 
 #include "CoreUILogs.h"
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/CommonActivatableWidgetContainer.h"
 
-UCommonActivatableWidgetContainerBase* UGameLayoutWidget::GetLayerWidget(FGameplayTag LayerName) const
+UCommonActivatableWidgetContainerBase* UUI_GameLayout::GetLayerWidget(FGameplayTag LayerName) const
 {
 	return this->Layers.FindRef(LayerName);
 }
 
-void UGameLayoutWidget::PopWidgetFromLayer(UCommonActivatableWidget* WidgetToRemove)
+void UUI_GameLayout::PopWidgetFromLayer(UCommonActivatableWidget* WidgetToRemove)
 {
 	if (WidgetToRemove == nullptr)
 	{
@@ -21,7 +21,7 @@ void UGameLayoutWidget::PopWidgetFromLayer(UCommonActivatableWidget* WidgetToRem
 	}
 }
 
-void UGameLayoutWidget::RegisterLayer(FGameplayTag LayerTag, UCommonActivatableWidgetContainerBase* LayerWidget)
+void UUI_GameLayout::RegisterLayer(FGameplayTag LayerTag, UCommonActivatableWidgetContainerBase* LayerWidget)
 {
 	if (IsDesignTime())
 	{

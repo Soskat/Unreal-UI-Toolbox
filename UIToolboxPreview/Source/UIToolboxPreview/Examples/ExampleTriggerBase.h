@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "ExampleTriggerBase.generated.h"
 
+class AExamplePlayerController;
 class UUI_InformationPrompt;
 
 UCLASS(Abstract)
@@ -28,6 +29,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Examples)
 	FText InformationText = FText::AsCultureInvariant(TEXT("<information prompt text>"));
 
+	UPROPERTY(BlueprintReadOnly)
+	AExamplePlayerController* CachedPlayerController = nullptr;
+	
 private:
 	UPROPERTY(Transient)
 	UUI_InformationPrompt* InteractionPrompt = nullptr;

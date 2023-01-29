@@ -1,45 +1,47 @@
 #include "CoreUIUtils.h"
 
 #include "CommonInputSubsystem.h"
-#include "GameLayoutWidget.h"
-#include "LayeredHUD.h"
+#include "DebugReturnMacros.h"
+#include "GameUIManagerSubsystem.h"
+#include "UI_GameLayout.h"
 #include "Kismet/GameplayStatics.h"
 
 int32 UCoreUIUtils::InputSuspensions = 0;
 
-UGameLayoutWidget* UCoreUIUtils::GetGameLayoutWidget(const UObject* WorldContextObject)
+ULocalPlayer* UCoreUIUtils::GetLocalPlayerFromController(APlayerController* PlayerController)
 {
-	if (IsValid(WorldContextObject))
+	if (IsValid(PlayerController))
 	{
-		if (const auto* PlayerController = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
-		{
-			if (const auto* LayeredHUD = Cast<ALayeredHUD>(PlayerController->GetHUD()))
-			{
-				return LayeredHUD->GetGameLayoutWidget();
-			}
-		}
+		return Cast<ULocalPlayer>(PlayerController->Player);
 	}
 	return nullptr;
 }
 
-UCommonActivatableWidget* UCoreUIUtils::PushContentToLayer(const UObject* WorldContextObject,
+UUI_GameLayout* UCoreUIUtils::GetGameLayoutWidgetForPlayer(ULocalPlayer* LocalPlayer)
+{
+	RETURN_ARG_ON_INVALID(LocalPlayer, nullptr);
+	const auto* GameInstance = UGameplayStatics::GetGameInstance(LocalPlayer);
+	RETURN_ARG_ON_INVALID(GameInstance, nullptr);
+	UGameUIManagerSubsystem* GameUIManager = GameInstance->GetSubsystem<UGameUIManagerSubsystem>();
+	RETURN_ARG_ON_INVALID(GameUIManager, nullptr);
+	return GameUIManager->GetGameLayoutForPlayer(LocalPlayer);
+}
+
+UCommonActivatableWidget* UCoreUIUtils::PushContentToLayerForPlayer(ULocalPlayer* LocalPlayer,
 	FGameplayTag LayerName,
 	TSubclassOf<UCommonActivatableWidget> WidgetClass)
 {
-	if (auto* GameLayoutWidget = GetGameLayoutWidget(WorldContextObject))
+	if (auto* GameLayoutWidget = GetGameLayoutWidgetForPlayer(LocalPlayer))
 	{
 		return GameLayoutWidget->PushWidgetToLayerStack(LayerName, WidgetClass);
 	}
 	return nullptr;
 }
 
-void UCoreUIUtils::PopContentFromLayer(UCommonActivatableWidget* ActivatableWidget)
+void UCoreUIUtils::PopContentFromLayerForPlayer(ULocalPlayer* LocalPlayer, UCommonActivatableWidget* ActivatableWidget)
 {
-	if (IsValid(ActivatableWidget) == false)
-	{
-		return;
-	}
-	if (auto* GameLayoutWidget = GetGameLayoutWidget(ActivatableWidget->GetOwningPlayer()))
+	RETURN_ON_INVALID(ActivatableWidget);
+	if (auto* GameLayoutWidget = GetGameLayoutWidgetForPlayer(LocalPlayer))
 	{
 		GameLayoutWidget->PopWidgetFromLayer(ActivatableWidget);
 	}
