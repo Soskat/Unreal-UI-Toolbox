@@ -4,7 +4,7 @@
 #include "DebugReturnMacros.h"
 #include "ExamplePlayerController.h"
 #include "NativeGameplayTags.h"
-#include "UI_InformationPrompt.h"
+#include "UI/UI_InformationPrompt.h"
 #include "Kismet/GameplayStatics.h"
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_UI_LAYER_GAME, "UI.Layers.Game");

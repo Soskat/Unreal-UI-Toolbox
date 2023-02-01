@@ -1,0 +1,2 @@
+#include "Messaging/GameDialogDescriptor.h"
+
