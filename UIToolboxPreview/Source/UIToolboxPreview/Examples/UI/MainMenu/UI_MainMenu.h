@@ -25,4 +25,17 @@ private:
 	UCommonButtonBase* Button_ShowError = nullptr;
 	UFUNCTION()
 	void ShowExampleErrorDialog();
+	
+	UPROPERTY(meta = (BindWidget))
+	UCommonButtonBase* Button_ShowComplex = nullptr;
+	UFUNCTION()
+	void ShowComplexDialogExample();
+	
+	UPROPERTY(meta = (BindWidget))
+	UCommonButtonBase* Button_QuitGame = nullptr;
+	UFUNCTION()
+	void OnQuitGameButtonClicked();
+
+	UPROPERTY(EditAnywhere, Category = MainMenu)
+	TSubclassOf<UCommonActivatableWidget> EditNumberExampleClass = nullptr;
 };

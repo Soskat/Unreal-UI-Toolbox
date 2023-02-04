@@ -6,7 +6,7 @@
 #include "BasicUI/UI_LabeledButtonBase.h"
 #include "Components/DynamicEntryBox.h"
 
-void UUI_DialogWithButtons::SetupDialog(UGameDialogDescriptor* Descriptor, FMessagingResultDelegate ResultCallback)
+void UUI_DialogWithButtons::SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
 {
 	Super::SetupDialog(Descriptor, ResultCallback);
 

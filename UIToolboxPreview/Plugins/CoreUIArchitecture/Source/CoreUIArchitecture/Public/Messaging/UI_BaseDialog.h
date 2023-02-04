@@ -11,7 +11,7 @@ class COREUIARCHITECTURE_API UUI_BaseDialog : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 public:
-	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FMessagingResultDelegate ResultCallback);
+	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback);
 
 	UFUNCTION(BlueprintCallable, Category = Dialog)
 	virtual void KillDialog();
@@ -19,5 +19,5 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnSetupDialog(UGameDialogDescriptor* Descriptor);
 
-	FMessagingResultDelegate OnResultCallback;
+	FDialogResultDelegate OnResultCallback;
 };

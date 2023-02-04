@@ -14,7 +14,7 @@ class COREUIARCHITECTURE_API UUI_DialogWithButtons : public UUI_BaseDialog
 	GENERATED_BODY()
 
 public:
-	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FMessagingResultDelegate ResultCallback) override;
+	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback) override;
 
 private:
 	UFUNCTION()

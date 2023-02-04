@@ -1,6 +1,10 @@
 #include "CoreUIArchitectureSettings.h"
 
-TSubclassOf<UGameUIPolicy> UCoreUIArchitectureSettings::GetDefaultUIPolicyClass() const
+TSubclassOf<UUI_GameLayout> UCoreUIArchitectureSettings::GetGameLayoutWidgetClass() const
 {
-	return this->DefaultUIPolicyClass.LoadSynchronous();
+	if (this->GameLayoutWidgetClass != nullptr)
+	{
+		return this->GameLayoutWidgetClass.LoadSynchronous();
+	}
+	return nullptr;
 }

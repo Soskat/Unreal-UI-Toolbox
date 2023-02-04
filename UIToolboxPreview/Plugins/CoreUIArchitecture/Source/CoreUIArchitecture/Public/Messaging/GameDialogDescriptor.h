@@ -52,4 +52,4 @@ public:
 	TArray<FGameDialogAction> PossibleActions = {};
 };
 
-DECLARE_DELEGATE_OneParam(FMessagingResultDelegate, EDialogResult /* Result */);
+DECLARE_DELEGATE_OneParam(FDialogResultDelegate, EDialogResult /* Result */);

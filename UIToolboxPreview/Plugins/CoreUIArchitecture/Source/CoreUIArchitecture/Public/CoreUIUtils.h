@@ -23,7 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Core UI Utils")
 	static UCommonActivatableWidget* PushContentToLayerForPlayer(
 		ULocalPlayer* LocalPlayer,
-		UPARAM(meta = (Categories = "UI.Layer")) FGameplayTag LayerName,
+		UPARAM(meta = (Categories = "UI.Layers")) FGameplayTag LayerName,
 		UPARAM(meta = (AllowAbstract = false)) TSubclassOf<UCommonActivatableWidget> WidgetClass
 		);
 

@@ -1,8 +1,13 @@
 #include "UI_MainMenu.h"
 #include "CommonButtonBase.h"
+#include "CoreUIUtils.h"
 #include "DebugReturnMacros.h"
+#include "NativeGameplayTags.h"
 #include "Messaging/GameDialogDescriptor.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Messaging/MessagingSubsystem.h"
+
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_UI_LAYER_MENU, "UI.Layers.Menu");
 
 #define LOCTEXT_NAMESPACE "MessagingExample"
 
@@ -18,6 +23,14 @@ void UUI_MainMenu::NativeConstruct()
 	{
 		this->Button_ShowError->OnClicked().AddUObject(this, &UUI_MainMenu::ShowExampleErrorDialog);
 	}
+	if (IsValid(this->Button_ShowComplex))
+	{
+		this->Button_ShowComplex->OnClicked().AddUObject(this, &UUI_MainMenu::ShowComplexDialogExample);
+	}
+	if (IsValid(this->Button_QuitGame))
+	{
+		this->Button_QuitGame->OnClicked().AddUObject(this, &UUI_MainMenu::OnQuitGameButtonClicked);
+	}
 }
 
 void UUI_MainMenu::NativeDestruct()
@@ -32,6 +45,10 @@ void UUI_MainMenu::NativeDestruct()
 	{
 		this->Button_ShowError->OnClicked().RemoveAll(this);
 	}
+	if (IsValid(this->Button_QuitGame))
+	{
+		this->Button_QuitGame->OnClicked().RemoveAll(this);
+	}
 }
 
 void UUI_MainMenu::ShowExampleConfirmationDialog()
@@ -42,7 +59,7 @@ void UUI_MainMenu::ShowExampleConfirmationDialog()
 
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;
-	ConfirmAction.DisplayText = LOCTEXT("simple_dialog_option", "Ok");
+	ConfirmAction.DisplayText = LOCTEXT("dialog_option_ok", "Ok");
 
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
@@ -61,7 +78,7 @@ void UUI_MainMenu::ShowExampleErrorDialog()
 
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;
-	ConfirmAction.DisplayText = LOCTEXT("simple_dialog_option", "Ok");
+	ConfirmAction.DisplayText = LOCTEXT("dialog_option_ok", "Ok");
 
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
@@ -70,6 +87,19 @@ void UUI_MainMenu::ShowExampleErrorDialog()
 	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
 	RETURN_ON_INVALID(MessagingSubsystem);
 	MessagingSubsystem->ShowError(Descriptor);
+}
+
+void UUI_MainMenu::ShowComplexDialogExample()
+{
+	RETURN_ON_INVALID(this->EditNumberExampleClass);
+	UCoreUIUtils::PushContentToLayerForPlayer(GetOwningLocalPlayer(), TAG_UI_LAYER_MENU, this->EditNumberExampleClass);
+}
+
+void UUI_MainMenu::OnQuitGameButtonClicked()
+{
+	auto* PlayerController = GetOwningPlayer();
+	RETURN_ON_INVALID(PlayerController);
+	UKismetSystemLibrary::QuitGame(this, PlayerController, EQuitPreference::Quit, true);
 }
 
 #undef LOCTEXT_NAMESPACE

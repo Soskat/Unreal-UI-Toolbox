@@ -2,7 +2,7 @@
 
 #include "CoreUIUtils.h"
 
-void UUI_BaseDialog::SetupDialog(UGameDialogDescriptor* Descriptor, FMessagingResultDelegate ResultCallback)
+void UUI_BaseDialog::SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
 {
 	this->OnResultCallback = ResultCallback;
 	OnSetupDialog(Descriptor);

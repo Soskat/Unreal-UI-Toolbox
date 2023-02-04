@@ -1,9 +1,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameUIPolicy.h"
+#include "Messaging/MessagingUIPolicy.h"
 
 #include "CoreUIArchitectureSettings.generated.h"
+
+USTRUCT(BlueprintType)
+struct FUIPolicyRecord
+{
+	GENERATED_BODY()
+	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Categories = "UI.Policy"))
+	FGameplayTag UIPolicyTag;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSoftClassPtr<UMessagingUIPolicy> UIPolicyClass;
+};
 
 UCLASS(Config = Game, DefaultConfig, meta = (DisplayName = "Core UI Architecture"))
 class COREUIARCHITECTURE_API UCoreUIArchitectureSettings : public UDeveloperSettings
@@ -14,9 +27,13 @@ public:
 	UCoreUIArchitectureSettings()
 	{
 	}
+	
+	UFUNCTION(BlueprintCallable, Category = "Game Layout")
+	TSubclassOf<UUI_GameLayout> GetGameLayoutWidgetClass() const;
+	
+	UPROPERTY(EditAnywhere, Category = "Game Layout")
+	TSoftClassPtr<UUI_GameLayout> GameLayoutWidgetClass = nullptr;
 
-	TSubclassOf<UGameUIPolicy> GetDefaultUIPolicyClass() const;
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly)
-	TSoftClassPtr<UGameUIPolicy> DefaultUIPolicyClass;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Messaging UI Policy")
+	TArray<FUIPolicyRecord> AvailableUIPolicies = {};
 };

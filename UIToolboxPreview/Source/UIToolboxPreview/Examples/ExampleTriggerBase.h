@@ -28,7 +28,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Examples)
 	FText InformationText = FText::AsCultureInvariant(TEXT("<information prompt text>"));
-
+	
 	UPROPERTY(BlueprintReadOnly)
 	AExamplePlayerController* CachedPlayerController = nullptr;
 	
