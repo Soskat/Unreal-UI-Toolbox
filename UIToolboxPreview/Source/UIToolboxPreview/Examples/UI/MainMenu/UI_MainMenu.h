@@ -20,17 +20,22 @@ private:
 	UCommonButtonBase* Button_ShowDialog = nullptr;
 	UFUNCTION()
 	void ShowExampleConfirmationDialog();
-	
+
 	UPROPERTY(meta = (BindWidget))
 	UCommonButtonBase* Button_ShowError = nullptr;
 	UFUNCTION()
 	void ShowExampleErrorDialog();
-	
+
 	UPROPERTY(meta = (BindWidget))
 	UCommonButtonBase* Button_ShowComplex = nullptr;
 	UFUNCTION()
 	void ShowComplexDialogExample();
-	
+
+	UPROPERTY(meta = (BindWidget))
+	UCommonButtonBase* Button_OpenGameplayLevel = nullptr;
+	UFUNCTION()
+	void OnOpenGameplayLevelButtonClicked();
+
 	UPROPERTY(meta = (BindWidget))
 	UCommonButtonBase* Button_QuitGame = nullptr;
 	UFUNCTION()
@@ -38,4 +43,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = MainMenu)
 	TSubclassOf<UCommonActivatableWidget> EditNumberExampleClass = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = MainMenu)
+	FName GameplayLevelName = {};
 };

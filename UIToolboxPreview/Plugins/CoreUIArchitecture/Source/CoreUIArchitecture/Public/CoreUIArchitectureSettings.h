@@ -31,7 +31,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Game Layout")
 	TSubclassOf<UUI_GameLayout> GetGameLayoutWidgetClass() const;
 	
-	UPROPERTY(EditAnywhere, Category = "Game Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "Game Layout")
 	TSoftClassPtr<UUI_GameLayout> GameLayoutWidgetClass = nullptr;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Messaging UI Policy")

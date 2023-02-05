@@ -3,6 +3,7 @@
 #include "CoreUIUtils.h"
 #include "DebugReturnMacros.h"
 #include "NativeGameplayTags.h"
+#include "Kismet/GameplayStatics.h"
 #include "Messaging/GameDialogDescriptor.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Messaging/MessagingSubsystem.h"
@@ -27,6 +28,10 @@ void UUI_MainMenu::NativeConstruct()
 	{
 		this->Button_ShowComplex->OnClicked().AddUObject(this, &UUI_MainMenu::ShowComplexDialogExample);
 	}
+	if (IsValid(this->Button_OpenGameplayLevel))
+	{
+		this->Button_OpenGameplayLevel->OnClicked().AddUObject(this, &UUI_MainMenu::OnOpenGameplayLevelButtonClicked);
+	}
 	if (IsValid(this->Button_QuitGame))
 	{
 		this->Button_QuitGame->OnClicked().AddUObject(this, &UUI_MainMenu::OnQuitGameButtonClicked);
@@ -44,6 +49,10 @@ void UUI_MainMenu::NativeDestruct()
 	if (IsValid(this->Button_ShowError))
 	{
 		this->Button_ShowError->OnClicked().RemoveAll(this);
+	}
+	if (IsValid(this->Button_OpenGameplayLevel))
+	{
+		this->Button_OpenGameplayLevel->OnClicked().RemoveAll(this);
 	}
 	if (IsValid(this->Button_QuitGame))
 	{
@@ -93,6 +102,12 @@ void UUI_MainMenu::ShowComplexDialogExample()
 {
 	RETURN_ON_INVALID(this->EditNumberExampleClass);
 	UCoreUIUtils::PushContentToLayerForPlayer(GetOwningLocalPlayer(), TAG_UI_LAYER_MENU, this->EditNumberExampleClass);
+}
+
+void UUI_MainMenu::OnOpenGameplayLevelButtonClicked()
+{
+	RETURN_ON_TRUE(this->GameplayLevelName.IsNone());
+	UGameplayStatics::OpenLevel(this, this->GameplayLevelName);
 }
 
 void UUI_MainMenu::OnQuitGameButtonClicked()
