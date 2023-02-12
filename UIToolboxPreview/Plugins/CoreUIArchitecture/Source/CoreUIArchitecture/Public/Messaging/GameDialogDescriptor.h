@@ -19,6 +19,7 @@ enum class EDialogResult : uint8
 };
 
 
+/** Dialog option characteristics. */
 USTRUCT(BlueprintType)
 struct FGameDialogAction
 {
@@ -33,6 +34,7 @@ public:
 };
 
 
+/** A set of information needed to display a dialog widget. */
 UCLASS(BlueprintType, Blueprintable)
 class COREUIARCHITECTURE_API UGameDialogDescriptor : public UObject
 {

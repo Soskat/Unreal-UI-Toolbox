@@ -9,6 +9,12 @@ class UGameUIPolicy;
 class UBaseLocalPlayer;
 class UUI_GameLayout;
 
+/**
+ * This subsystem is responsible for managing game layouts widgets for all players.
+ * It automatically assign a game layout widget per each local player added to the current game instance.
+ * 
+ * It also manages current messaging UI policy object.
+ */
 UCLASS()
 class COREUIARCHITECTURE_API UGameUIManagerSubsystem : public UGameInstanceSubsystem
 {

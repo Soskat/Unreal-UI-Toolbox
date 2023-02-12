@@ -8,6 +8,10 @@
 
 class UUI_GameLayout;
 
+/**
+ * This class contains a set of utility functions for adding and removing content from game layout widget
+ * for specific player and for suspending and restoring UI input.
+ */
 UCLASS()
 class COREUIARCHITECTURE_API UCoreUIUtils : public UBlueprintFunctionLibrary
 {
@@ -16,7 +20,7 @@ class COREUIARCHITECTURE_API UCoreUIUtils : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Core UI Utils")
 	static ULocalPlayer* GetLocalPlayerFromController(APlayerController* PlayerController);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Core UI Utils", meta = (WorldContext = "WidgetContextObject"))
 	static UUI_GameLayout* GetGameLayoutWidgetForPlayer(ULocalPlayer* LocalPlayer);
 
@@ -25,7 +29,7 @@ public:
 		ULocalPlayer* LocalPlayer,
 		UPARAM(meta = (Categories = "UI.Layers")) FGameplayTag LayerName,
 		UPARAM(meta = (AllowAbstract = false)) TSubclassOf<UCommonActivatableWidget> WidgetClass
-		);
+	);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Core UI Utils")
 	static void PopContentFromLayerForPlayer(ULocalPlayer* LocalPlayer, UCommonActivatableWidget* ActivatableWidget);

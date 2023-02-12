@@ -9,6 +9,10 @@
 class UMessagingUIPolicy;
 class UUI_BaseDialog;
 
+/**
+ * This subsystem is providing methods for displaying confirmation and error dialogs.
+ * It uses preferred dialog widgets from current UMessagingUIPolicy object loaded to UGameUIManagerSubsystem.
+ */
 UCLASS()
 class COREUIARCHITECTURE_API UMessagingSubsystem : public ULocalPlayerSubsystem
 {

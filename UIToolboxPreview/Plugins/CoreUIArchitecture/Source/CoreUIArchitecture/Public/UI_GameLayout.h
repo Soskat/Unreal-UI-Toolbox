@@ -8,6 +8,10 @@
 
 class UCommonActivatableWidget;
 
+/**
+ * This widget class represents how to layout, push and display all layers of the UI for a single player.
+ * Each local player will receive their own game layout widget.
+ */
 UCLASS(Abstract, meta = (DisableNativeTick))
 class COREUIARCHITECTURE_API UUI_GameLayout : public UCommonUserWidget
 {

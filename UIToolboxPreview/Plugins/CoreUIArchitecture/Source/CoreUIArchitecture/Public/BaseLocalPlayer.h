@@ -5,6 +5,9 @@
 
 #include "BaseLocalPlayer.generated.h"
 
+/**
+ * Base class for local player, that helps UGameUIManagerSubsystem detect addition of new local player.
+ */
 UCLASS()
 class COREUIARCHITECTURE_API UBaseLocalPlayer : public ULocalPlayer
 {
