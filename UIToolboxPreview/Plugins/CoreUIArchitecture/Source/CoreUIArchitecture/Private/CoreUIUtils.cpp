@@ -1,7 +1,6 @@
 #include "CoreUIUtils.h"
 
 #include "CommonInputSubsystem.h"
-#include "DebugReturnMacros.h"
 #include "GameUIManagerSubsystem.h"
 #include "UI_GameLayout.h"
 #include "Kismet/GameplayStatics.h"
@@ -19,17 +18,26 @@ ULocalPlayer* UCoreUIUtils::GetLocalPlayerFromController(APlayerController* Play
 
 UUI_GameLayout* UCoreUIUtils::GetGameLayoutWidgetForPlayer(ULocalPlayer* LocalPlayer)
 {
-	RETURN_ARG_ON_INVALID(LocalPlayer, nullptr);
+	if (IsValid(LocalPlayer) == false)
+	{
+		return nullptr;
+	}
 	const auto* GameInstance = UGameplayStatics::GetGameInstance(LocalPlayer);
-	RETURN_ARG_ON_INVALID(GameInstance, nullptr);
+	if (IsValid(GameInstance) == false)
+	{
+		return nullptr;
+	}
 	UGameUIManagerSubsystem* GameUIManager = GameInstance->GetSubsystem<UGameUIManagerSubsystem>();
-	RETURN_ARG_ON_INVALID(GameUIManager, nullptr);
+	if (IsValid(GameUIManager) == false)
+	{
+		return nullptr;
+	}
 	return GameUIManager->GetGameLayoutForPlayer(LocalPlayer);
 }
 
 UCommonActivatableWidget* UCoreUIUtils::PushContentToLayerForPlayer(ULocalPlayer* LocalPlayer,
-	FGameplayTag LayerName,
-	TSubclassOf<UCommonActivatableWidget> WidgetClass)
+                                                                    FGameplayTag LayerName,
+                                                                    TSubclassOf<UCommonActivatableWidget> WidgetClass)
 {
 	if (auto* GameLayoutWidget = GetGameLayoutWidgetForPlayer(LocalPlayer))
 	{
@@ -40,7 +48,10 @@ UCommonActivatableWidget* UCoreUIUtils::PushContentToLayerForPlayer(ULocalPlayer
 
 void UCoreUIUtils::PopContentFromLayerForPlayer(ULocalPlayer* LocalPlayer, UCommonActivatableWidget* ActivatableWidget)
 {
-	RETURN_ON_INVALID(ActivatableWidget);
+	if (IsValid(ActivatableWidget) == false)
+	{
+		return;
+	}
 	if (auto* GameLayoutWidget = GetGameLayoutWidgetForPlayer(LocalPlayer))
 	{
 		GameLayoutWidget->PopWidgetFromLayer(ActivatableWidget);

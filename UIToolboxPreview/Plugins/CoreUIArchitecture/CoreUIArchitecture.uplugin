@@ -4,7 +4,7 @@
 	"VersionName": "1.0",
 	"FriendlyName": "CoreUIArchitecture",
 	"Description": "Basic architecture for managing game UI elements in runtime. Heavily inspired by Lyra Starter Game (https://docs.unrealengine.com/5.0/en-US/lyra-sample-game-in-unreal-engine/)",
-	"Category": "Other",
+	"Category": "UI",
 	"CreatedBy": "Katarzyna 'K8' Sosnowska",
 	"CreatedByURL": "https://gitlab.com/Soskat",
 	"DocsURL": "",
@@ -28,10 +28,6 @@
 		},
 		{
 			"Name": "CommonUI",
-			"Enabled": true
-		},
-		{
-			"Name": "DebuggingUtils",
 			"Enabled": true
 		}
 	]

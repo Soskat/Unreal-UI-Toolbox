@@ -25,7 +25,6 @@ public class CoreUIArchitecture : ModuleRules
 				"CommonInput",
 				"EnhancedInput",
 				"DeveloperSettings",
-				"DebuggingUtils",
 			}
 		);
 	}

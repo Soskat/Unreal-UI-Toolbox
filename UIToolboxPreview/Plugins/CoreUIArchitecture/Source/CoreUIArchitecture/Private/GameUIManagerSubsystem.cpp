@@ -3,7 +3,6 @@
 #include "BaseLocalPlayer.h"
 #include "CoreUIArchitectureSettings.h"
 #include "CoreUILogs.h"
-#include "DebugReturnMacros.h"
 #include "Messaging/MessagingUIPolicy.h"
 #include "NativeGameplayTags.h"
 #include "UI_GameLayout.h"
@@ -68,22 +67,37 @@ void UGameUIManagerSubsystem::Deinitialize()
 UUI_GameLayout* UGameUIManagerSubsystem::GetGameLayoutForPlayer(ULocalPlayer* LocalPlayer)
 {
 	const UBaseLocalPlayer* BaseLocalPlayer = Cast<UBaseLocalPlayer>(LocalPlayer);
-	RETURN_ARG_ON_INVALID(BaseLocalPlayer, nullptr);
-	RETURN_ARG_ON_FALSE(this->GameLayouts.Contains(BaseLocalPlayer), nullptr);
+	if (IsValid(BaseLocalPlayer) == false)
+	{
+		return nullptr;
+	}
+	if (this->GameLayouts.Contains(BaseLocalPlayer) == false)
+	{
+		return nullptr;
+	}
 	return this->GameLayouts[BaseLocalPlayer];
 }
 
 void UGameUIManagerSubsystem::RegisterLocalPlayer(ULocalPlayer* LocalPlayer)
 {
-	RETURN_ON_INVALID(this->CurrentPolicy);
+	if (IsValid(this->CurrentPolicy) == false)
+	{
+		return;
+	}
 	UBaseLocalPlayer* BaseLocalPlayer = Cast<UBaseLocalPlayer>(LocalPlayer);
-	RETURN_ON_INVALID(BaseLocalPlayer);
+	if (IsValid(BaseLocalPlayer) == false)
+	{
+		return;
+	}
 	BaseLocalPlayer->OnPlayerControllerSet.AddWeakLambda(
 		this,
 		[this](UBaseLocalPlayer* BaseLocalPlayer, APlayerController* PlayerController)
 		{
 			UnregisterLocalPlayer(BaseLocalPlayer);
-			RETURN_ON_INVALID(this->GameLayoutClass);
+			if (IsValid(this->GameLayoutClass) == false)
+			{
+				return;
+			}
 			auto* GameLayout = CreateWidget<UUI_GameLayout>(PlayerController, this->GameLayoutClass);
 			if (IsValid(GameLayout))
 			{
@@ -96,8 +110,14 @@ void UGameUIManagerSubsystem::RegisterLocalPlayer(ULocalPlayer* LocalPlayer)
 void UGameUIManagerSubsystem::UnregisterLocalPlayer(ULocalPlayer* LocalPlayer)
 {
 	const UBaseLocalPlayer* BaseLocalPlayer = Cast<UBaseLocalPlayer>(LocalPlayer);
-	RETURN_ON_INVALID(BaseLocalPlayer);
-	RETURN_ON_FALSE(this->GameLayouts.Contains(BaseLocalPlayer));
+	if (IsValid(BaseLocalPlayer) == false)
+	{
+		return;
+	}
+	if (this->GameLayouts.Contains(BaseLocalPlayer) == false)
+	{
+		return;
+	}
 	auto* GameLayout = this->GameLayouts[BaseLocalPlayer];
 	if (IsValid(GameLayout))
 	{
