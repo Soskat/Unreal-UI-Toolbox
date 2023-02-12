@@ -4,7 +4,7 @@
 #include "CommonActivatableWidget.h"
 #include "UI_MainMenu.generated.h"
 
-class UCommonButtonBase;
+enum class EDialogResult : uint8;
 
 UCLASS()
 class UITOOLBOXPREVIEW_API UUI_MainMenu : public UCommonActivatableWidget
@@ -12,34 +12,26 @@ class UITOOLBOXPREVIEW_API UUI_MainMenu : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
-	virtual void NativeDestruct() override;
+	UFUNCTION(BlueprintCallable, Category = MainMenu)
+	void ShowConfirmationDialogExample() const;
+	
+	UFUNCTION(BlueprintCallable, Category = MainMenu)
+	void ShowErrorDialogExample() const;
+	
+	UFUNCTION(BlueprintCallable, Category = MainMenu)
+	void ShowComplexDialogExample() const;
+
+	UFUNCTION(BlueprintCallable, Category = MainMenu)
+	void ShowConfirmationForOpenGameplayLevel();
+	UFUNCTION(BlueprintCallable, Category = MainMenu)
+	void ShowConfirmationForQuitGame();
 
 private:
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_ShowDialog = nullptr;
 	UFUNCTION()
-	void ShowExampleConfirmationDialog();
+	void HandleOpenGameplayLevelConfirmationResult(EDialogResult Result);
 
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_ShowError = nullptr;
 	UFUNCTION()
-	void ShowExampleErrorDialog();
-
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_ShowComplex = nullptr;
-	UFUNCTION()
-	void ShowComplexDialogExample();
-
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_OpenGameplayLevel = nullptr;
-	UFUNCTION()
-	void OnOpenGameplayLevelButtonClicked();
-
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_QuitGame = nullptr;
-	UFUNCTION()
-	void OnQuitGameButtonClicked();
+	void HandleQuitGameConfirmationResult(EDialogResult Result);
 
 	UPROPERTY(EditAnywhere, Category = MainMenu)
 	TSubclassOf<UCommonActivatableWidget> EditNumberExampleClass = nullptr;

@@ -1,7 +1,6 @@
 #include "UI_MainMenu.h"
 #include "CommonButtonBase.h"
 #include "CoreUIUtils.h"
-#include "DebugReturnMacros.h"
 #include "NativeGameplayTags.h"
 #include "Kismet/GameplayStatics.h"
 #include "Messaging/GameDialogDescriptor.h"
@@ -12,55 +11,7 @@ UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_UI_LAYER_MENU, "UI.Layers.Menu");
 
 #define LOCTEXT_NAMESPACE "MessagingExample"
 
-void UUI_MainMenu::NativeConstruct()
-{
-	Super::NativeConstruct();
-
-	if (IsValid(this->Button_ShowDialog))
-	{
-		this->Button_ShowDialog->OnClicked().AddUObject(this, &UUI_MainMenu::ShowExampleConfirmationDialog);
-	}
-	if (IsValid(this->Button_ShowError))
-	{
-		this->Button_ShowError->OnClicked().AddUObject(this, &UUI_MainMenu::ShowExampleErrorDialog);
-	}
-	if (IsValid(this->Button_ShowComplex))
-	{
-		this->Button_ShowComplex->OnClicked().AddUObject(this, &UUI_MainMenu::ShowComplexDialogExample);
-	}
-	if (IsValid(this->Button_OpenGameplayLevel))
-	{
-		this->Button_OpenGameplayLevel->OnClicked().AddUObject(this, &UUI_MainMenu::OnOpenGameplayLevelButtonClicked);
-	}
-	if (IsValid(this->Button_QuitGame))
-	{
-		this->Button_QuitGame->OnClicked().AddUObject(this, &UUI_MainMenu::OnQuitGameButtonClicked);
-	}
-}
-
-void UUI_MainMenu::NativeDestruct()
-{
-	Super::NativeDestruct();
-
-	if (IsValid(this->Button_ShowDialog))
-	{
-		this->Button_ShowDialog->OnClicked().RemoveAll(this);
-	}
-	if (IsValid(this->Button_ShowError))
-	{
-		this->Button_ShowError->OnClicked().RemoveAll(this);
-	}
-	if (IsValid(this->Button_OpenGameplayLevel))
-	{
-		this->Button_OpenGameplayLevel->OnClicked().RemoveAll(this);
-	}
-	if (IsValid(this->Button_QuitGame))
-	{
-		this->Button_QuitGame->OnClicked().RemoveAll(this);
-	}
-}
-
-void UUI_MainMenu::ShowExampleConfirmationDialog()
+void UUI_MainMenu::ShowConfirmationDialogExample() const
 {
 	UGameDialogDescriptor* Descriptor = NewObject<UGameDialogDescriptor>();
 	Descriptor->Header = LOCTEXT("simple_confirmation_dialog_header", "Example dialog");
@@ -73,13 +24,19 @@ void UUI_MainMenu::ShowExampleConfirmationDialog()
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
 	const auto* LocalPlayer = GetOwningLocalPlayer();
-	RETURN_ON_INVALID(LocalPlayer);
+	if (IsValid(LocalPlayer) == false)
+	{
+		return;
+	}
 	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
-	RETURN_ON_INVALID(MessagingSubsystem);
+	if (IsValid(MessagingSubsystem) == false)
+	{
+		return;
+	}
 	MessagingSubsystem->ShowConfirmation(Descriptor);
 }
 
-void UUI_MainMenu::ShowExampleErrorDialog()
+void UUI_MainMenu::ShowErrorDialogExample() const
 {
 	UGameDialogDescriptor* Descriptor = NewObject<UGameDialogDescriptor>();
 	Descriptor->Header = LOCTEXT("simple_error_dialog_header", "Example error dialog");
@@ -92,29 +49,114 @@ void UUI_MainMenu::ShowExampleErrorDialog()
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
 	const auto* LocalPlayer = GetOwningLocalPlayer();
-	RETURN_ON_INVALID(LocalPlayer);
+	if (IsValid(LocalPlayer) == false)
+	{
+		return;
+	}
 	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
-	RETURN_ON_INVALID(MessagingSubsystem);
+	if (IsValid(MessagingSubsystem) == false)
+	{
+		return;
+	}
 	MessagingSubsystem->ShowError(Descriptor);
 }
 
-void UUI_MainMenu::ShowComplexDialogExample()
+void UUI_MainMenu::ShowComplexDialogExample() const
 {
-	RETURN_ON_INVALID(this->EditNumberExampleClass);
+	if (IsValid(this->EditNumberExampleClass) == false)
+	{
+		return;
+	}
 	UCoreUIUtils::PushContentToLayerForPlayer(GetOwningLocalPlayer(), TAG_UI_LAYER_MENU, this->EditNumberExampleClass);
 }
 
-void UUI_MainMenu::OnOpenGameplayLevelButtonClicked()
+void UUI_MainMenu::ShowConfirmationForOpenGameplayLevel()
 {
-	RETURN_ON_TRUE(this->GameplayLevelName.IsNone());
-	UGameplayStatics::OpenLevel(this, this->GameplayLevelName);
+	UGameDialogDescriptor* Descriptor = NewObject<UGameDialogDescriptor>();
+	Descriptor->Header = LOCTEXT("open_gameplay_level_confirmation_header", "Open Gameplay Level");
+	Descriptor->Body = LOCTEXT("open_gameplay_level_confirmation_body", "Do you want to open example Gameplay level?");
+
+	FGameDialogAction DeclineAction;
+	DeclineAction.Result = EDialogResult::Declined;
+	DeclineAction.DisplayText = LOCTEXT("dialog_option_no", "No");
+
+	FGameDialogAction ConfirmAction;
+	ConfirmAction.Result = EDialogResult::Confirmed;
+	ConfirmAction.DisplayText = LOCTEXT("dialog_option_yes", "Yes");
+
+	Descriptor->PossibleActions.Add(DeclineAction);
+	Descriptor->PossibleActions.Add(ConfirmAction);
+
+	const auto* LocalPlayer = GetOwningLocalPlayer();
+	if (IsValid(LocalPlayer) == false)
+	{
+		return;
+	}
+	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
+	if (IsValid(MessagingSubsystem) == false)
+	{
+		return;
+	}
+	FDialogResultDelegate ResultCallback = FDialogResultDelegate::CreateUObject(
+		this, &UUI_MainMenu::HandleOpenGameplayLevelConfirmationResult);
+	MessagingSubsystem->ShowConfirmation(Descriptor, ResultCallback);
 }
 
-void UUI_MainMenu::OnQuitGameButtonClicked()
+void UUI_MainMenu::ShowConfirmationForQuitGame()
 {
+	UGameDialogDescriptor* Descriptor = NewObject<UGameDialogDescriptor>();
+	Descriptor->Header = LOCTEXT("quit_game_confirmation_header", "Quit Game");
+	Descriptor->Body = LOCTEXT("quit_game_confirmation_body", "Do you want to quit game?");
+
+	FGameDialogAction DeclineAction;
+	DeclineAction.Result = EDialogResult::Declined;
+	DeclineAction.DisplayText = LOCTEXT("dialog_option_no", "No");
+
+	FGameDialogAction ConfirmAction;
+	ConfirmAction.Result = EDialogResult::Confirmed;
+	ConfirmAction.DisplayText = LOCTEXT("dialog_option_yes", "Yes");
+
+	Descriptor->PossibleActions.Add(DeclineAction);
+	Descriptor->PossibleActions.Add(ConfirmAction);
+
+	const auto* LocalPlayer = GetOwningLocalPlayer();
+	if (IsValid(LocalPlayer) == false)
+	{
+		return;
+	}
+	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
+	if (IsValid(MessagingSubsystem) == false)
+	{
+		return;
+	}
+	FDialogResultDelegate ResultCallback = FDialogResultDelegate::CreateUObject(
+		this, &UUI_MainMenu::HandleQuitGameConfirmationResult);
+	MessagingSubsystem->ShowConfirmation(Descriptor, ResultCallback);
+}
+
+void UUI_MainMenu::HandleOpenGameplayLevelConfirmationResult(EDialogResult Result)
+{
+	if (Result != EDialogResult::Confirmed)
+	{
+		return;
+	}
+	if (this->GameplayLevelName.IsNone() == false)
+	{
+		UGameplayStatics::OpenLevel(this, this->GameplayLevelName);
+	}
+}
+
+void UUI_MainMenu::HandleQuitGameConfirmationResult(EDialogResult Result)
+{
+	if (Result != EDialogResult::Confirmed)
+	{
+		return;
+	}
 	auto* PlayerController = GetOwningPlayer();
-	RETURN_ON_INVALID(PlayerController);
-	UKismetSystemLibrary::QuitGame(this, PlayerController, EQuitPreference::Quit, true);
+	if (IsValid(PlayerController))
+	{
+		UKismetSystemLibrary::QuitGame(this, PlayerController, EQuitPreference::Quit, true);
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

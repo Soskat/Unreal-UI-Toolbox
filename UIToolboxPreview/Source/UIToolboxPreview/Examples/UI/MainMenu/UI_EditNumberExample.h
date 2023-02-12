@@ -5,38 +5,27 @@
 #include "UI_EditNumberExample.generated.h"
 
 enum class EDialogResult : uint8;
-class UCommonTextBlock;
-class UCommonButtonBase;
 
 UCLASS()
 class UITOOLBOXPREVIEW_API UUI_EditNumberExample : public UCommonActivatableWidget
 {
 	GENERATED_BODY()
 
-public:
-	virtual UWidget* NativeGetDesiredFocusTarget() const override;
-
 protected:
 	virtual void NativePreConstruct() override;
-	virtual void NativeConstruct() override;
-	virtual void NativeDestruct() override;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = EditNumberExample)
+	void OnCurrentNumberChanged(int NewCurrentNumber);
+
+	UFUNCTION(BlueprintCallable, Category = EditNumberExample)
+	void ShowChangeNumberDialog();
+
+	UFUNCTION(BlueprintCallable, Category = EditNumberExample)
+	void QuitExample();
 
 private:
 	void SetCurrentNumber(int NewNumber);
 	void OnEditNumberActionChosen(EDialogResult Result);
-	
-	UPROPERTY(meta = (BindWidget))
-	UCommonTextBlock* CurrentNumberLabel = nullptr;
-	
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_Quit = nullptr;
-	UFUNCTION()
-	void QuitExample();
-	
-	UPROPERTY(meta = (BindWidget))
-	UCommonButtonBase* Button_ChangeNumber = nullptr;
-	UFUNCTION()
-	void ShowChangeNumberDialog();
 
 	UPROPERTY(EditAnywhere, Category = EditNumberExample)
 	int DefaultCurrentNumber = 42;

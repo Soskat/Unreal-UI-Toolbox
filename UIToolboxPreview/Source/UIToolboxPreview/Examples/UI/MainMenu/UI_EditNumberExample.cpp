@@ -1,18 +1,10 @@
 #include "UI_EditNumberExample.h"
 
-#include "CommonButtonBase.h"
-#include "CommonTextBlock.h"
 #include "CoreUIUtils.h"
-#include "DebugReturnMacros.h"
 #include "Messaging/GameDialogDescriptor.h"
 #include "Messaging/MessagingSubsystem.h"
 
 #define LOCTEXT_NAMESPACE "MessagingExample"
-
-UWidget* UUI_EditNumberExample::NativeGetDesiredFocusTarget() const
-{
-	return this->Button_ChangeNumber;	
-}
 
 void UUI_EditNumberExample::NativePreConstruct()
 {
@@ -21,41 +13,10 @@ void UUI_EditNumberExample::NativePreConstruct()
 	SetCurrentNumber(this->DefaultCurrentNumber);
 }
 
-void UUI_EditNumberExample::NativeConstruct()
-{
-	Super::NativeConstruct();
-
-	if (IsValid(this->Button_Quit))
-	{
-		this->Button_Quit->OnClicked().AddUObject(this, &UUI_EditNumberExample::QuitExample);
-	}
-	if (IsValid(this->Button_ChangeNumber))
-	{
-		this->Button_ChangeNumber->OnClicked().AddUObject(this, &UUI_EditNumberExample::ShowChangeNumberDialog);
-	}
-}
-
-void UUI_EditNumberExample::NativeDestruct()
-{
-	Super::NativeDestruct();
-
-	if (IsValid(this->Button_Quit))
-	{
-		this->Button_Quit->OnClicked().RemoveAll(this);
-	}
-	if (IsValid(this->Button_ChangeNumber))
-	{
-		this->Button_ChangeNumber->OnClicked().RemoveAll(this);
-	}
-}
-
 void UUI_EditNumberExample::SetCurrentNumber(int NewNumber)
 {
 	this->CurrentNumber = NewNumber;
-	if (IsValid(this->CurrentNumberLabel))
-	{
-		this->CurrentNumberLabel->SetText(FText::AsNumber(this->CurrentNumber));
-	}
+	OnCurrentNumberChanged(this->CurrentNumber);
 }
 
 void UUI_EditNumberExample::QuitExample()
@@ -87,16 +48,23 @@ void UUI_EditNumberExample::ShowChangeNumberDialog()
 	Descriptor->PossibleActions.Add(DecreaseAction);
 
 	const auto* LocalPlayer = GetOwningLocalPlayer();
-	RETURN_ON_INVALID(LocalPlayer);
+	if (IsValid(LocalPlayer) == false)
+	{
+		return;
+	}
 	auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
-	RETURN_ON_INVALID(MessagingSubsystem);
+	if (IsValid(MessagingSubsystem) == false)
+	{
+		return;
+	}
 	const auto ResultCallback = FDialogResultDelegate::CreateUObject(this, &ThisClass::OnEditNumberActionChosen);
 	MessagingSubsystem->ShowConfirmation(Descriptor, ResultCallback);
 }
 
 void UUI_EditNumberExample::OnEditNumberActionChosen(EDialogResult Result)
 {
-	FText BodyTextFormat = LOCTEXT("complex_dialog_2_body", "Old number {0} has been {1}. New current number is {2}.");
+	const FText BodyTextFormat = LOCTEXT("complex_dialog_2_body",
+	                                     "Old number {0} has been {1}. New current number is {2}.");
 	FText PerformedOperationText = {};
 	int NewNumber = this->CurrentNumber;
 	bool bNumberChanged = true;
@@ -131,11 +99,17 @@ void UUI_EditNumberExample::OnEditNumberActionChosen(EDialogResult Result)
 		Descriptor->PossibleActions.Add(ConfirmAction);
 
 		const auto* LocalPlayer = GetOwningLocalPlayer();
-		RETURN_ON_INVALID(LocalPlayer);
+		if (IsValid(LocalPlayer) == false)
+		{
+			return;
+		}
 		auto* MessagingSubsystem = LocalPlayer->GetSubsystem<UMessagingSubsystem>();
-		RETURN_ON_INVALID(MessagingSubsystem);
+		if (IsValid(MessagingSubsystem) == false)
+		{
+			return;
+		}
 		MessagingSubsystem->ShowConfirmation(Descriptor);
-		
+
 		SetCurrentNumber(NewNumber);
 	}
 }
