@@ -6,9 +6,9 @@
 #include "BasicUI/UI_LabeledButtonBase.h"
 #include "Components/DynamicEntryBox.h"
 
-void UUI_DialogWithButtons::SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
+void UUI_DialogWithButtons::NativeSetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
 {
-	Super::SetupDialog(Descriptor, ResultCallback);
+	this->ButtonToFocus = nullptr;
 
 	if (IsValid(this->HeaderTextLabel))
 	{
@@ -31,8 +31,22 @@ void UUI_DialogWithButtons::SetupDialog(UGameDialogDescriptor* Descriptor, FDial
 			UUI_LabeledButtonBase* Button = this->ButtonsEntryBox->CreateEntry<UUI_LabeledButtonBase>();
 			Button->OnClicked().AddUObject(this, &ThisClass::CloseDialogWithResult, Action.Result);
 			Button->SetLabelText(Action.DisplayText);
+
+			if (Action.bDesiredFocusTarget)
+			{
+				this->ButtonToFocus = Button;
+			}
 		}
 	}
+
+	// We're calling Super:: implementation at the end in order to trigger OnSetupDialogFinished event 
+	// when everything is setup correctly
+	Super::NativeSetupDialog(Descriptor, ResultCallback);
+}
+
+UWidget* UUI_DialogWithButtons::NativeGetDesiredFocusTarget() const
+{
+	return this->ButtonToFocus;
 }
 
 void UUI_DialogWithButtons::CloseDialogWithResult(EDialogResult Result)

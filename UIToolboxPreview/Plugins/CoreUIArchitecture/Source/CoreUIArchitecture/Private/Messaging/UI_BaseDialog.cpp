@@ -2,10 +2,11 @@
 
 #include "CoreUIUtils.h"
 
-void UUI_BaseDialog::SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
+void UUI_BaseDialog::NativeSetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback)
 {
 	this->OnResultCallback = ResultCallback;
-	OnSetupDialog(Descriptor);
+	BP_SetupDialog(Descriptor);
+	OnSetupDialogFinished();
 }
 
 void UUI_BaseDialog::KillDialog()

@@ -31,6 +31,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText DisplayText = {};
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bDesiredFocusTarget = false;
 };
 
 

@@ -33,7 +33,7 @@ void UMessagingSubsystem::ShowDialogInternal(UGameDialogDescriptor* DialogDescri
 		auto* NewWidget = UCoreUIUtils::PushContentToLayerForPlayer(LocalPlayer, TAG_UI_LAYER_MODAL, DialogClass);
 		if (auto* NewDialog = Cast<UUI_BaseDialog>(NewWidget))
 		{
-			NewDialog->SetupDialog(DialogDescriptor, ResultCallback);
+			NewDialog->NativeSetupDialog(DialogDescriptor, ResultCallback);
 		}
 	}
 }

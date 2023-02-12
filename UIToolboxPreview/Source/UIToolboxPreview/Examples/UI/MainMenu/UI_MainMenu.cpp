@@ -20,6 +20,7 @@ void UUI_MainMenu::ShowConfirmationDialogExample() const
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;
 	ConfirmAction.DisplayText = LOCTEXT("dialog_option_ok", "Ok");
+	ConfirmAction.bDesiredFocusTarget = true;
 
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
@@ -45,6 +46,7 @@ void UUI_MainMenu::ShowErrorDialogExample() const
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;
 	ConfirmAction.DisplayText = LOCTEXT("dialog_option_ok", "Ok");
+	ConfirmAction.bDesiredFocusTarget = true;
 
 	Descriptor->PossibleActions.Add(ConfirmAction);
 
@@ -83,6 +85,7 @@ void UUI_MainMenu::ShowConfirmationForOpenGameplayLevel()
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;
 	ConfirmAction.DisplayText = LOCTEXT("dialog_option_yes", "Yes");
+	ConfirmAction.bDesiredFocusTarget = true;
 
 	Descriptor->PossibleActions.Add(DeclineAction);
 	Descriptor->PossibleActions.Add(ConfirmAction);
@@ -111,6 +114,7 @@ void UUI_MainMenu::ShowConfirmationForQuitGame()
 	FGameDialogAction DeclineAction;
 	DeclineAction.Result = EDialogResult::Declined;
 	DeclineAction.DisplayText = LOCTEXT("dialog_option_no", "No");
+	DeclineAction.bDesiredFocusTarget = true;
 
 	FGameDialogAction ConfirmAction;
 	ConfirmAction.Result = EDialogResult::Confirmed;

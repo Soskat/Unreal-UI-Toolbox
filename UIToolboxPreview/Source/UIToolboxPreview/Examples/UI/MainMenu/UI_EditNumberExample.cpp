@@ -34,6 +34,7 @@ void UUI_EditNumberExample::ShowChangeNumberDialog()
 	FGameDialogAction CancelAction;
 	CancelAction.Result = EDialogResult::Cancelled;
 	CancelAction.DisplayText = LOCTEXT("dialog_option_cancel", "Cancel");
+	CancelAction.bDesiredFocusTarget = true;
 
 	FGameDialogAction IncreaseAction;
 	IncreaseAction.Result = EDialogResult::Confirmed;
@@ -95,6 +96,7 @@ void UUI_EditNumberExample::OnEditNumberActionChosen(EDialogResult Result)
 		FGameDialogAction ConfirmAction;
 		ConfirmAction.Result = EDialogResult::Confirmed;
 		ConfirmAction.DisplayText = LOCTEXT("dialog_option_ok", "Ok");
+		ConfirmAction.bDesiredFocusTarget = true;
 
 		Descriptor->PossibleActions.Add(ConfirmAction);
 

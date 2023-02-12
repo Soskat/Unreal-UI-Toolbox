@@ -14,7 +14,10 @@ class COREUIARCHITECTURE_API UUI_DialogWithButtons : public UUI_BaseDialog
 	GENERATED_BODY()
 
 public:
-	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback) override;
+	virtual void NativeSetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback) override;
+
+protected:
+	virtual UWidget* NativeGetDesiredFocusTarget() const;
 
 private:
 	UFUNCTION()
@@ -28,4 +31,7 @@ private:
 	
 	UPROPERTY(Meta = (BindWidget))
 	UDynamicEntryBox* ButtonsEntryBox = nullptr;
+
+	UPROPERTY()
+	UWidget* ButtonToFocus = nullptr;
 };

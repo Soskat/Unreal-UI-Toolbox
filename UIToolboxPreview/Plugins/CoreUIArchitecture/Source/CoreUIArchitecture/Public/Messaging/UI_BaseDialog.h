@@ -14,13 +14,15 @@ class COREUIARCHITECTURE_API UUI_BaseDialog : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 public:
-	virtual void SetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback);
+	UFUNCTION(BlueprintImplementableEvent, Category = Dialog)
+	void BP_SetupDialog(UGameDialogDescriptor* Descriptor);
+	virtual void NativeSetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Dialog)
+	void OnSetupDialogFinished();
 
 	UFUNCTION(BlueprintCallable, Category = Dialog)
 	virtual void KillDialog();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnSetupDialog(UGameDialogDescriptor* Descriptor);
 
 	FDialogResultDelegate OnResultCallback;
 };
