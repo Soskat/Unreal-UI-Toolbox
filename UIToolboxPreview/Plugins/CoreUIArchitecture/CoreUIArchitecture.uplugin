@@ -6,7 +6,7 @@
 	"Description": "Basic architecture for managing game UI elements in runtime. Heavily inspired by Lyra Starter Game (https://docs.unrealengine.com/5.0/en-US/lyra-sample-game-in-unreal-engine/)",
 	"Category": "UI",
 	"CreatedBy": "Katarzyna 'K8' Sosnowska",
-	"CreatedByURL": "https://gitlab.com/Soskat",
+	"CreatedByURL": "https://github.com/Soskat",
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
@@ -22,10 +22,6 @@
 		}
 	],
 	"Plugins": [
-		{
-			"Name": "EnhancedInput",
-			"Enabled": true
-		},
 		{
 			"Name": "CommonUI",
 			"Enabled": true

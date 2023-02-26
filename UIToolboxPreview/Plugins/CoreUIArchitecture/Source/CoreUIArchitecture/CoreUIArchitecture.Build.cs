@@ -23,7 +23,6 @@ public class CoreUIArchitecture : ModuleRules
 				"SlateCore",
 				"UMG",
 				"CommonInput",
-				"EnhancedInput",
 				"DeveloperSettings",
 			}
 		);
