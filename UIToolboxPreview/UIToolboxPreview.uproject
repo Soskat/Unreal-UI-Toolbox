@@ -33,6 +33,10 @@
 		{
 			"Name": "DebuggingUtils",
 			"Enabled": true
+		},
+		{
+			"Name": "InputDevicesBrushes",
+			"Enabled": true
 		}
 	]
 }

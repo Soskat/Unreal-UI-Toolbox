@@ -4,7 +4,6 @@
 #include "DebugReturnMacros.h"
 #include "ExamplePlayerController.h"
 #include "NativeGameplayTags.h"
-#include "UI/UI_InformationPrompt.h"
 #include "Kismet/GameplayStatics.h"
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_UI_LAYER_GAME, "UI.Layers.Game");
@@ -23,14 +22,10 @@ void AExampleTriggerBase::NotifyActorBeginOverlap(AActor* OtherActor)
 		this->CachedPlayerController = PlayerController;
 
 		RETURN_ON_FALSE(this->InteractionPromptWidget != nullptr);
-		this->InteractionPrompt = Cast<UUI_InformationPrompt>(UCoreUIUtils::PushContentToLayerForPlayer(
+		this->InteractionPrompt = Cast<UCommonActivatableWidget>(UCoreUIUtils::PushContentToLayerForPlayer(
 			PlayerController->GetLocalPlayer(),
 			TAG_UI_LAYER_GAME,
 			this->InteractionPromptWidget));
-		if (IsValid(this->InteractionPrompt))
-		{
-			this->InteractionPrompt->SetInformationText(this->InformationText);
-		}
 	}
 }
 

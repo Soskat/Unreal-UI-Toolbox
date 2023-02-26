@@ -4,8 +4,8 @@
 #include "GameFramework/Actor.h"
 #include "ExampleTriggerBase.generated.h"
 
+class UCommonActivatableWidget;
 class AExamplePlayerController;
-class UUI_InformationPrompt;
 
 UCLASS(Abstract)
 class UITOOLBOXPREVIEW_API AExampleTriggerBase : public AActor
@@ -24,15 +24,12 @@ protected:
 	void OnExecuteExample();
 
 	UPROPERTY(EditAnywhere, Category = Examples)
-	TSubclassOf<UUI_InformationPrompt> InteractionPromptWidget = nullptr;
-
-	UPROPERTY(EditAnywhere, Category = Examples)
-	FText InformationText = FText::AsCultureInvariant(TEXT("<information prompt text>"));
+	TSubclassOf<UCommonActivatableWidget> InteractionPromptWidget = nullptr;
 	
 	UPROPERTY(BlueprintReadOnly)
 	AExamplePlayerController* CachedPlayerController = nullptr;
 	
 private:
 	UPROPERTY(Transient)
-	UUI_InformationPrompt* InteractionPrompt = nullptr;
+	UCommonActivatableWidget* InteractionPrompt = nullptr;
 };
