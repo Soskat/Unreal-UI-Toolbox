@@ -3,14 +3,14 @@
 #include "CoreMinimal.h"
 #include "UI_GameLayout.h"
 #include "Messaging/UI_BaseDialog.h"
-#include "MessagingUIPolicy.generated.h"
+#include "MessagingPolicy.generated.h"
 
 /**
  * This object contains a set of preferred widgets to use for a confirmation and an error dialogs.
- * It can be dynamically switched during runtime by calling proper methods from UGameUIManagerSubsystem.
+ * It can be dynamically switched during runtime by calling proper methods from UMessagingSubsystem.
  */
-UCLASS(Abstract, Blueprintable, Within = GameUIManagerSubsystem)
-class COREUIARCHITECTURE_API UMessagingUIPolicy : public UObject
+UCLASS(Abstract, Blueprintable, Within = MessagingSubsystem)
+class COREUIARCHITECTURE_API UMessagingPolicy : public UObject
 {
 	GENERATED_BODY()
 

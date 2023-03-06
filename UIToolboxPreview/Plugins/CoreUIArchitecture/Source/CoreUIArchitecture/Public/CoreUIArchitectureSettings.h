@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Messaging/MessagingUIPolicy.h"
+#include "Messaging/MessagingPolicy.h"
 
 #include "CoreUIArchitectureSettings.generated.h"
 
@@ -15,7 +15,7 @@ public:
 	FGameplayTag UIPolicyTag;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSoftClassPtr<UMessagingUIPolicy> UIPolicyClass;
+	TSoftClassPtr<UMessagingPolicy> UIPolicyClass;
 };
 
 UCLASS(Config = Game, DefaultConfig, meta = (DisplayName = "Core UI Architecture"))
