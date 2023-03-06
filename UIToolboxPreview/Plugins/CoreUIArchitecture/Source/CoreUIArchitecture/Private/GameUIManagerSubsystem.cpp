@@ -83,7 +83,7 @@ void UGameUIManagerSubsystem::UnregisterLocalPlayer(ULocalPlayer* LocalPlayer)
 	{
 		return;
 	}
-	auto* GameLayout = this->GameLayouts[BaseLocalPlayer];
+	const auto GameLayout = this->GameLayouts[BaseLocalPlayer];
 	if (IsValid(GameLayout))
 	{
 		GameLayout->RemoveFromParent();

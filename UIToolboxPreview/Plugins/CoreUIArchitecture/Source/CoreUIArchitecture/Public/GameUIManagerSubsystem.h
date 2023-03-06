@@ -31,9 +31,9 @@ private:
 	UFUNCTION()
 	void UnregisterLocalPlayer(ULocalPlayer* LocalPlayer);
 
-	UPROPERTY(Transient)
+	UPROPERTY()
 	TSubclassOf<UUI_GameLayout> GameLayoutClass = nullptr;
 	
-	UPROPERTY(Transient)
-	TMap<UBaseLocalPlayer*, UUI_GameLayout*> GameLayouts = {};
+	UPROPERTY()
+	TMap<TObjectPtr<UBaseLocalPlayer>, TObjectPtr<UUI_GameLayout>> GameLayouts = {};
 };

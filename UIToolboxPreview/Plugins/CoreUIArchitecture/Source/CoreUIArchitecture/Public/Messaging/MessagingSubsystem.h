@@ -36,11 +36,11 @@ public:
 		return this->CurrentPolicy;
 	}
 	
-	void ShowConfirmation(UGameDialogDescriptor* DialogDescriptor, FDialogResultDelegate ResultCallback = FDialogResultDelegate());
-	void ShowError(UGameDialogDescriptor* DialogDescriptor, FDialogResultDelegate ResultCallback = FDialogResultDelegate());
+	void ShowConfirmation(TObjectPtr<UGameDialogDescriptor> DialogDescriptor, FDialogResultDelegate ResultCallback = FDialogResultDelegate());
+	void ShowError(TObjectPtr<UGameDialogDescriptor> DialogDescriptor, FDialogResultDelegate ResultCallback = FDialogResultDelegate());
 
 private:
-	void ShowDialogInternal(UGameDialogDescriptor* DialogDescriptor, FDialogResultDelegate ResultCallback, TSubclassOf<UUI_BaseDialog> DialogClass);
+	void ShowDialogInternal(TObjectPtr<UGameDialogDescriptor> DialogDescriptor, FDialogResultDelegate ResultCallback, TSubclassOf<UUI_BaseDialog> DialogClass);
 	TSubclassOf<UUI_BaseDialog> GetConfirmationDialogClass() const;
 	TSubclassOf<UUI_BaseDialog> GetErrorDialogClass() const;
 

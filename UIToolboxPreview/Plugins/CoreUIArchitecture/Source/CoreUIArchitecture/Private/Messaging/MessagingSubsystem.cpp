@@ -75,18 +75,18 @@ void UMessagingSubsystem::SetDefaultMessagingPolicy()
 	SetMessagingPolicyFromTag(TAG_UI_POLICY_DEFAULT);
 }
 
-void UMessagingSubsystem::ShowConfirmation(UGameDialogDescriptor* DialogDescriptor,
+void UMessagingSubsystem::ShowConfirmation(TObjectPtr<UGameDialogDescriptor> DialogDescriptor,
 	FDialogResultDelegate ResultCallback)
 {
 	ShowDialogInternal(DialogDescriptor, ResultCallback, GetConfirmationDialogClass());
 }
 
-void UMessagingSubsystem::ShowError(UGameDialogDescriptor* DialogDescriptor, FDialogResultDelegate ResultCallback)
+void UMessagingSubsystem::ShowError(TObjectPtr<UGameDialogDescriptor> DialogDescriptor, FDialogResultDelegate ResultCallback)
 {
 	ShowDialogInternal(DialogDescriptor, ResultCallback, GetErrorDialogClass());
 }
 
-void UMessagingSubsystem::ShowDialogInternal(UGameDialogDescriptor* DialogDescriptor,
+void UMessagingSubsystem::ShowDialogInternal(TObjectPtr<UGameDialogDescriptor> DialogDescriptor,
 	FDialogResultDelegate ResultCallback,
 	TSubclassOf<UUI_BaseDialog> DialogClass)
 {
