@@ -24,14 +24,14 @@ private:
 	void CloseDialogWithResult(EDialogResult Result);
 	
 	UPROPERTY(meta = (BindWidget))
-	UCommonTextBlock* HeaderTextLabel = nullptr;
+	TObjectPtr<UCommonTextBlock> HeaderTextLabel = nullptr;
 
 	UPROPERTY(meta = (BindWidget))
-	UCommonRichTextBlock* BodyTextLabel = nullptr;
+	TObjectPtr<UCommonRichTextBlock> BodyTextLabel = nullptr;
 	
 	UPROPERTY(Meta = (BindWidget))
-	UDynamicEntryBox* ButtonsEntryBox = nullptr;
+	TObjectPtr<UDynamicEntryBox> ButtonsEntryBox = nullptr;
 
 	UPROPERTY()
-	UWidget* ButtonToFocus = nullptr;
+	TObjectPtr<UWidget> ButtonToFocus = nullptr;
 };

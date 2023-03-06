@@ -16,5 +16,5 @@ public:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UCommonTextBlock* TextLabel = nullptr;
+	TObjectPtr<UCommonTextBlock> TextLabel = nullptr;
 };

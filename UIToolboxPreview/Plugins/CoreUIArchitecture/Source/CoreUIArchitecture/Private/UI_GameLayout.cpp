@@ -4,7 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/CommonActivatableWidgetContainer.h"
 
-UCommonActivatableWidgetContainerBase* UUI_GameLayout::GetLayerWidget(FGameplayTag LayerName) const
+TObjectPtr<UCommonActivatableWidgetContainerBase> UUI_GameLayout::GetLayerWidget(FGameplayTag LayerName) const
 {
 	return this->Layers.FindRef(LayerName);
 }
