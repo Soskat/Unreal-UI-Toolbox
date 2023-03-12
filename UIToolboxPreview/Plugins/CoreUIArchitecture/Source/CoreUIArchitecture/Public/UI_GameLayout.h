@@ -18,10 +18,10 @@ class COREUIARCHITECTURE_API UUI_GameLayout : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
-	UCommonActivatableWidgetContainerBase* GetLayerWidget(FGameplayTag LayerName) const;
+	TObjectPtr<UCommonActivatableWidgetContainerBase> GetLayerWidget(FGameplayTag LayerName) const;
 
 	template <typename ActivatableWidgetT = UCommonActivatableWidget>
-	ActivatableWidgetT* PushWidgetToLayerStack(FGameplayTag LayerName, UClass* ActivatableWidgetClass)
+	ActivatableWidgetT* PushWidgetToLayerStack(FGameplayTag LayerName, TObjectPtr<UClass> ActivatableWidgetClass)
 	{
 		return PushWidgetToLayerStack<ActivatableWidgetT>(LayerName,
 			ActivatableWidgetClass,
@@ -32,12 +32,12 @@ public:
 
 	template <typename ActivatableWidgetT = UCommonActivatableWidget>
 	ActivatableWidgetT* PushWidgetToLayerStack(FGameplayTag LayerName,
-		UClass* ActivatableWidgetClass,
+		TObjectPtr<UClass> ActivatableWidgetClass,
 		TFunctionRef<void(ActivatableWidgetT&)> InitInstanceFunc)
 	{
 		static_assert(TIsDerivedFrom<ActivatableWidgetT, UCommonActivatableWidget>::IsDerived, "Only CommonActivatableWidgets can be used here");
 
-		if (UCommonActivatableWidgetContainerBase* Layer = GetLayerWidget(LayerName))
+		if (const auto Layer = GetLayerWidget(LayerName))
 		{
 			return Layer->AddWidget<ActivatableWidgetT>(ActivatableWidgetClass, InitInstanceFunc);
 		}
@@ -53,5 +53,5 @@ protected:
 
 private:
 	UPROPERTY(Transient)
-	TMap<FGameplayTag, UCommonActivatableWidgetContainerBase*> Layers = {};
+	TMap<FGameplayTag, TObjectPtr<UCommonActivatableWidgetContainerBase>> Layers = {};
 };

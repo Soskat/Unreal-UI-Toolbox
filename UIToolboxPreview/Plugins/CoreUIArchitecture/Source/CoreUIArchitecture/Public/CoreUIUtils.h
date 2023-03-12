@@ -18,10 +18,10 @@ class COREUIARCHITECTURE_API UCoreUIUtils : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Core UI Utils")
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic, Category = "Core UI Utils")
 	static ULocalPlayer* GetLocalPlayerFromController(APlayerController* PlayerController);
 
-	UFUNCTION(BlueprintCallable, Category = "Core UI Utils", meta = (WorldContext = "WidgetContextObject"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Core UI Utils", meta = (WorldContext = "WidgetContextObject"))
 	static UUI_GameLayout* GetGameLayoutWidgetForPlayer(ULocalPlayer* LocalPlayer);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Core UI Utils")

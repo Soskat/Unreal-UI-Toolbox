@@ -1,6 +1,6 @@
-#include "Messaging/MessagingUIPolicy.h"
+#include "Messaging/MessagingPolicy.h"
 
-TSubclassOf<UUI_BaseDialog> UMessagingUIPolicy::GetConfirmationDialogClass() const
+TSubclassOf<UUI_BaseDialog> UMessagingPolicy::GetConfirmationDialogClass() const
 {
 	if (this->ConfirmationDialogClass != nullptr)
 	{
@@ -9,7 +9,7 @@ TSubclassOf<UUI_BaseDialog> UMessagingUIPolicy::GetConfirmationDialogClass() con
 	return nullptr;
 }
 
-TSubclassOf<UUI_BaseDialog> UMessagingUIPolicy::GetErrorDialogClass() const
+TSubclassOf<UUI_BaseDialog> UMessagingPolicy::GetErrorDialogClass() const
 {
 	if (this->ErrorDialogClass != nullptr)
 	{

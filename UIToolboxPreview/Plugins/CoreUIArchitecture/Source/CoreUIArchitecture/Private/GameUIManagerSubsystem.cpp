@@ -2,12 +2,9 @@
 
 #include "BaseLocalPlayer.h"
 #include "CoreUIArchitectureSettings.h"
-#include "CoreUILogs.h"
-#include "Messaging/MessagingUIPolicy.h"
+#include "Messaging/MessagingPolicy.h"
 #include "NativeGameplayTags.h"
 #include "UI_GameLayout.h"
-
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_UI_POLICY_DEFAULT, "UI.Policy.Default");
 
 void UGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -15,32 +12,6 @@ void UGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 	const UCoreUIArchitectureSettings* CoreUISettings = GetDefault<UCoreUIArchitectureSettings>();
 	this->GameLayoutClass = CoreUISettings->GetGameLayoutWidgetClass();
-
-	for (auto& PolicyInfo : CoreUISettings->AvailableUIPolicies)
-	{
-		if (PolicyInfo.UIPolicyTag.IsValid() == false)
-		{
-			CORE_UI_WARNING("Policy with invalid tag has been detected - rejecting.");
-			continue;
-		}
-		const auto PolicyClass = PolicyInfo.UIPolicyClass.LoadSynchronous();
-		if (PolicyClass == nullptr)
-		{
-			CORE_UI_WARNING("None class set for policy with tag %s", *PolicyInfo.UIPolicyTag.ToString());
-			continue;
-		}
-
-		if (this->AvailablePolicies.Contains(PolicyInfo.UIPolicyTag))
-		{
-			CORE_UI_WARNING("Policy with tag %s has already been registered (item: %s)",
-			                *PolicyInfo.UIPolicyTag.ToString(), *PolicyInfo.UIPolicyClass.ToString());
-			continue;
-		}
-
-		this->AvailablePolicies.Add(PolicyInfo.UIPolicyTag, PolicyClass);
-	}
-
-	SetDefaultMessagingUIPolicy();
 
 	auto* GameInstance = GetGameInstance();
 	if (IsValid(GameInstance))
@@ -53,8 +24,6 @@ void UGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 void UGameUIManagerSubsystem::Deinitialize()
 {
 	Super::Deinitialize();
-
-	SetMessagingUIPolicy(nullptr);
 
 	auto* GameInstance = GetGameInstance();
 	if (IsValid(GameInstance))
@@ -80,10 +49,6 @@ UUI_GameLayout* UGameUIManagerSubsystem::GetGameLayoutForPlayer(ULocalPlayer* Lo
 
 void UGameUIManagerSubsystem::RegisterLocalPlayer(ULocalPlayer* LocalPlayer)
 {
-	if (IsValid(this->CurrentPolicy) == false)
-	{
-		return;
-	}
 	UBaseLocalPlayer* BaseLocalPlayer = Cast<UBaseLocalPlayer>(LocalPlayer);
 	if (IsValid(BaseLocalPlayer) == false)
 	{
@@ -118,33 +83,10 @@ void UGameUIManagerSubsystem::UnregisterLocalPlayer(ULocalPlayer* LocalPlayer)
 	{
 		return;
 	}
-	auto* GameLayout = this->GameLayouts[BaseLocalPlayer];
+	const auto GameLayout = this->GameLayouts[BaseLocalPlayer];
 	if (IsValid(GameLayout))
 	{
 		GameLayout->RemoveFromParent();
 	}
 	this->GameLayouts.Remove(BaseLocalPlayer);
-}
-
-void UGameUIManagerSubsystem::SetMessagingUIPolicy(UMessagingUIPolicy* NewPolicy)
-{
-	if (this->CurrentPolicy != NewPolicy)
-	{
-		this->CurrentPolicy = NewPolicy;
-	}
-}
-
-void UGameUIManagerSubsystem::SetMessagingUIPolicyFromTag(FGameplayTag PolicyTag)
-{
-	const auto* Found = this->AvailablePolicies.Find(PolicyTag);
-	if (Found != nullptr)
-	{
-		const auto NewPolicy = NewObject<UMessagingUIPolicy>(this, *Found);
-		SetMessagingUIPolicy(NewPolicy);
-	}
-}
-
-void UGameUIManagerSubsystem::SetDefaultMessagingUIPolicy()
-{
-	SetMessagingUIPolicyFromTag(TAG_UI_POLICY_DEFAULT);
 }
