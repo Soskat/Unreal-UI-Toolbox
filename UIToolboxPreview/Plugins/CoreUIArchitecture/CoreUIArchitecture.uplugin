@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "1.1",
 	"FriendlyName": "CoreUIArchitecture",
 	"Description": "Basic architecture for managing game UI elements in runtime. Heavily inspired by Lyra Starter Game (https://docs.unrealengine.com/5.0/en-US/lyra-sample-game-in-unreal-engine/)",
 	"Category": "UI",

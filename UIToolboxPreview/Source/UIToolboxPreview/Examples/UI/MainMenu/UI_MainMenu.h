@@ -1,13 +1,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CommonActivatableWidget.h"
+#include "CoreUIArchitecture/Public/BasicUI/UI_BaseActivatableWidget.h"
 #include "UI_MainMenu.generated.h"
 
 enum class EDialogResult : uint8;
 
 UCLASS()
-class UITOOLBOXPREVIEW_API UUI_MainMenu : public UCommonActivatableWidget
+class UITOOLBOXPREVIEW_API UUI_MainMenu : public UUI_BaseActivatableWidget
 {
 	GENERATED_BODY()
 
