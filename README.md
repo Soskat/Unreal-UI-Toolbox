@@ -34,4 +34,4 @@ Learn more about this plugin [here](./UIToolboxPreview/Plugins/CoreUIArchitectur
 
 This content-only plugin contains a set of UCommonInputBaseControllerData databases that can be used to retrive data of input devices buttons UI images. It is completely based on built-in Unreal's CommonUI plugin - no need to install third-party items.
 
-Learn more about this plugin [here](./UIToolboxPreview/Plugins/InputDevicesBrushes/README.md).
+Learn more about this plugin [here](https://github.com/Soskat/UE5-InputDevicesBrushes).
