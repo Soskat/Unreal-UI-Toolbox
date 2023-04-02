@@ -15,6 +15,7 @@ enum class EDialogResult : uint8
 	Cancelled,
 	/** The dialog was explicitly killed (no user input) */
 	Killed,
+	/** Used for handling unexpected errors */
 	Unknown UMETA(Hidden)
 };
 
@@ -44,6 +45,10 @@ class COREUIARCHITECTURE_API UGameDialogDescriptor : public UObject
 	GENERATED_BODY()
 
 public:
+	static TObjectPtr<UGameDialogDescriptor> CreateConfirmationOk(const FText& Header, const FText& Body);
+	static TObjectPtr<UGameDialogDescriptor> CreateConfirmationOkCancel(const FText& Header, const FText& Body);
+	static TObjectPtr<UGameDialogDescriptor> CreateConfirmationYesNo(const FText& Header, const FText& Body);
+	
 	/** The header of the message to display */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Header = {};
