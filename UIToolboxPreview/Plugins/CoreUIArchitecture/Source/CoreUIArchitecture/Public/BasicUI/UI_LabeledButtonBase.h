@@ -12,7 +12,8 @@ class COREUIARCHITECTURE_API UUI_LabeledButtonBase : public UCommonButtonBase
 	GENERATED_BODY()
 
 public:
-	void SetLabelText(FText& NewText);
+	UFUNCTION(BlueprintCallable, Category = LabeledButton)
+	void SetLabelText(const FText& NewText);
 
 private:
 	UPROPERTY(meta = (BindWidget))

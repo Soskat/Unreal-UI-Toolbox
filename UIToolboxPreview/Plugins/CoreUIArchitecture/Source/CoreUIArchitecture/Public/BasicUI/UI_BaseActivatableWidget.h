@@ -27,6 +27,10 @@ public:
 	//~End of UCommonActivatableWidget interface
 
 protected:
+	//~UUserWidget interface
+	virtual void NativeConstruct() override;
+	//~End of UUserWidget interface
+	
 	/** The desired input mode to use while this UI is activated, for example do you want key presses to still reach the game/player controller? */
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	ECommonWidgetInputMode InputConfig = ECommonWidgetInputMode::Default;
@@ -34,4 +38,8 @@ protected:
 	/** The desired mouse behavior when the game gets input. */
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	EMouseCaptureMode GameMouseCaptureMode = EMouseCaptureMode::CapturePermanently;
+
+	/** Should we force applying associated input config when this widget is constructed? */
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	bool bForceInputChangeUponConstruction = false;
 };

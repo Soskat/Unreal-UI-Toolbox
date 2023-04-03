@@ -2,7 +2,7 @@
 
 #include "CommonTextBlock.h"
 
-void UUI_LabeledButtonBase::SetLabelText(FText& NewText)
+void UUI_LabeledButtonBase::SetLabelText(const FText& NewText)
 {
 	if (IsValid(this->TextLabel))
 	{

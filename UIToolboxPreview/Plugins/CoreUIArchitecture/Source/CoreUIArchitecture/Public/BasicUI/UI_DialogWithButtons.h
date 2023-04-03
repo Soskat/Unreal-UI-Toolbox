@@ -16,13 +16,13 @@ class COREUIARCHITECTURE_API UUI_DialogWithButtons : public UUI_BaseDialog
 public:
 	virtual void NativeSetupDialog(UGameDialogDescriptor* Descriptor, FDialogResultDelegate ResultCallback) override;
 
+	UFUNCTION(BlueprintCallable, Category = Messaging)
+	void CloseDialogWithResult(EDialogResult Result);
+
 protected:
 	virtual UWidget* NativeGetDesiredFocusTarget() const;
 
 private:
-	UFUNCTION()
-	void CloseDialogWithResult(EDialogResult Result);
-	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UCommonTextBlock> HeaderTextLabel = nullptr;
 
